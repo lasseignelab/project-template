@@ -1,2 +1,0 @@
-linters: linters_with_defaults()
-error_on_lint: TRUE

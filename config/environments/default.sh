@@ -9,5 +9,6 @@
 #
 # Configuration that only works in the author's environment should be added to
 # another environment file customized to the author's environment. The
-# customized environment file should be activated by setting the CAP_ENV.  See
-# CAPTURE documentation for instructions on setting CAP_ENV.
+# customized environment file should be activated by setting the
+# CAP_ENVIRONMENT.  See CAPTURE documentation for instructions on setting
+# CAP_ENVIRONMENT.

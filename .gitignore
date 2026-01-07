@@ -2,7 +2,6 @@
 # Project files
 ##########################################################
 
-bin/conda/.conda_env_hashes/
 bin/container/*.sif
 
 data/*

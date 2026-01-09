@@ -32,5 +32,5 @@ List project acknowledgements.
 
 ## License
 
-This repository is licensed under the MIT License, see LICENSE
+This repository is licensed under the GPLv3 License, see LICENSE
 documentation within this repository for more details.

@@ -4,6 +4,20 @@ Changes to the CAPTURE project template itself are recorded here, newest
 first. Changes made to projects created from this template belong in
 AGENTS_CHANGELOG.md instead.
 
+## 2026-10-07 - Use project-relative paths with cap_verify_md5
+
+- **Agent:** Claude Code, Claude Opus 5.5
+- **Request:** Specify that `cap_verify_md5` should use data paths relative to
+  the project root instead of `CAP_DATA_PATH`, so `.out` files match across
+  environments.
+- **Changes:**
+  - `AGENTS.md` - Modified: the `cap_verify_md5` helper description now
+    requires project-relative paths and explains why absolute paths break
+    reproduction checks.
+- **Verification:** Not run; documentation-only change.
+  `verifications/example.sh` already uses the relative path `"data"`.
+- **Notes:** None.
+
 ## 2026-10-07 - Keep the example FASTA download compressed
 
 - **Agent:** Claude Code, Claude Opus 5.5

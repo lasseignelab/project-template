@@ -224,6 +224,11 @@ verification script so others can confirm they reproduced the outputs.
 - Helper functions:
   - `cap_verify_md5 [--select=PATTERN] [--ignore=PATTERN] FILE...` - Records
     MD5 checksums of files. Quote patterns, e.g. `cap_verify_md5 "data/*"`.
+    Always pass paths relative to the project root (`"data/aligned"`,
+    `"results/counts.csv"`), never `"$CAP_DATA_PATH/..."` or other absolute
+    paths. The paths are written to the `.out` file, so absolute paths will
+    not match when the verification is run in another location or
+    environment.
   - `cap_verify_append TEXT` - Appends text, e.g. section headings or output
     of a custom check:
     `cap_verify_append "$(python3 "$CAP_VERIFICATIONS_PATH/02_counts.py")"`.

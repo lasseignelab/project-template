@@ -4,6 +4,39 @@ Changes to the CAPTURE project template itself are recorded here, newest
 first. Changes made to projects created from this template belong in
 AGENTS_CHANGELOG.md instead.
 
+## 2026-10-07 - Keep the example FASTA download compressed
+
+- **Agent:** Claude Code, Claude Opus 5.5
+- **Request:** Remove `--unzip` from the example job to follow the new
+  compressed-by-default download guidance.
+- **Changes:**
+  - `src/example.sh` - Modified: removed `--unzip` from the chromosome MT
+    FASTA download so it stays as `.fa.gz`.
+  - `verifications/example.out` - Modified: regenerated; the FASTA checksum
+    now covers `Homo_sapiens.GRCh38.dna.chromosome.MT.fa.gz`.
+- **Verification:** `cap run -e default src/example.sh` downloaded both files;
+  `CAP_ENVIRONMENT=default cap verify verifications/example.sh` regenerated
+  the `.out` file. The `samplesheet.csv` checksum is unchanged, and the
+  decompressed FASTA matches the previous checksum
+  (`91bd5b959db49ecbc2fdfa4b662b3e87`). The downloaded files were removed from
+  `data/` afterwards.
+- **Notes:** Supersedes the note in the previous entry that `src/example.sh`
+  still used `--unzip`.
+
+## 2026-10-07 - Keep cap_data_download files compressed by default
+
+- **Agent:** Claude Code, Claude Opus 5.5
+- **Request:** Make not using `--unzip` the default for `cap_data_download`,
+  because many tools read compressed files and they save space.
+- **Changes:**
+  - `AGENTS.md` - Modified: told agents not to use `--unzip` by default and
+    to use it only when a tool cannot read the compressed file or an archive
+    must be extracted. Added a compressed GTF download as the main example and
+    labeled the Cell Ranger `.tar.gz` reference as the exception.
+- **Verification:** Checked that the example Ensembl GTF URL returns HTTP 200.
+- **Notes:** `src/example.sh` still uses `--unzip`; changing it also changes
+  `verifications/example.out`, so it was left for the user to decide.
+
 ## 2026-10-07 - Add default Slurm resource requests to the examples
 
 - **Agent:** Claude Code, Claude Opus 5.5

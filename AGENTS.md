@@ -141,7 +141,18 @@ These are available inside any job run with `cap run`:
   `--source-file-name NAME`. Always use this for input data and provide
   `--md5sum` when the checksum is known.
 
+  Do not use `--unzip` by default. Keep downloads compressed, since many
+  tools read compressed files directly (e.g. `.fastq.gz`, `.fa.gz`, `.gtf.gz`)
+  and compressed files save space. Use `--unzip` only when the next tool
+  cannot read the compressed file or the download is an archive that must be
+  extracted, such as a reference directory packaged as `.tar.gz`.
+
   ```bash
+  cap_data_download \
+    --subdirectory "reference" \
+    "https://ftp.ensembl.org/pub/release-110/gtf/homo_sapiens/Homo_sapiens.GRCh38.110.gtf.gz"
+
+  # Exception: Cell Ranger needs the extracted reference directory.
   cap_data_download \
     --unzip \
     --subdirectory "reference" \

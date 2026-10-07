@@ -112,7 +112,9 @@ Pipeline steps are Bash job scripts in `src/` that are run with `cap run`.
   e.g. `src/01_download.sh`, `src/02_align.sh`, `src/03_quantify.sh`.
 - Start each job with `#!/bin/bash`. Add Slurm resource requests as
   `#SBATCH` lines directly after the shebang; `cap run` keeps them and
-  injects the CAPTURE helper functions after them. Do not set `--job-name`,
+  injects the CAPTURE helper functions after them. Every job includes
+  `#SBATCH --ntasks=1`, `#SBATCH --cpus-per-task=1`, and `#SBATCH --mem=...`
+  by default (see the `slurm` skill). Do not set `--job-name`,
   `--output`, or `--error`; `cap run` sets these and writes logs to `logs/`.
 - Reference project locations with the CAPTURE environment variables instead
   of hard-coded or relative paths. Batch jobs run with `src/` as the working

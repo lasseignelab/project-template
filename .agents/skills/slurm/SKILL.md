@@ -15,11 +15,14 @@ the helper functions, names the job, and writes logs to `logs/`. Run every
 Put `#SBATCH` lines directly after `#!/bin/bash`, before any other code.
 `cap run` keeps them in place and injects the helpers after them.
 
+Every job script in `src/` starts with these default resource requests:
+
 ```bash
 #!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
 #SBATCH --time=02:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
 
 set -euo pipefail
 
@@ -27,9 +30,15 @@ threads="${SLURM_CPUS_PER_TASK:-1}"
 ```
 
 - Never set `--job-name`, `--output`, or `--error`; `cap run` sets them.
-- Always request `--time`, `--cpus-per-task`, and `--mem` (or
-  `--mem-per-cpu`) explicitly. Start modest and adjust from `seff` results
-  rather than requesting a whole node.
+- Always include `--ntasks=1`, `--cpus-per-task=1`, and `--mem`, even for
+  jobs that are usually run in the terminal, so that `cap run -s` never falls
+  back to cluster defaults. Also set `--time`.
+- Keep `--ntasks=1`; jobs run one process, and multithreaded tools scale with
+  `--cpus-per-task`. Use more tasks only for MPI programs, and ask first.
+- Raise `--cpus-per-task` above 1 only when the tool is multithreaded and is
+  given the thread count. Set `--mem` to the job's expected need (4G is the
+  starting point) and adjust from `seff` results rather than requesting a
+  whole node.
 - Pass the allocation to tools instead of hard-coding thread counts:
   `"${SLURM_CPUS_PER_TASK:-1}"` keeps the job working outside Slurm too.
 - For GPUs use `#SBATCH --gres=gpu:1` (add a type only if the user's cluster
@@ -53,9 +62,10 @@ Use an array file in `CAP_DATA_PATH` (one value per line) with
 ```bash
 #!/bin/bash
 #SBATCH --array=0-11%4
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
 #SBATCH --time=04:00:00
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
 
 set -euo pipefail
 

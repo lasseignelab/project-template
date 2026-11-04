@@ -44,12 +44,8 @@ Use this format for each entry:
 ## YYYY-MM-DD - Short summary of the change
 
 - **Agent:** Agent name and model (e.g. Claude Code, Claude Opus 5.5)
-- **Request:** One or two sentences describing what the user asked for.
 - **Changes:**
   - `path/to/file` - Created/Modified/Deleted: what changed and why.
-- **Verification:** Commands run to test the change (e.g. `cap run -n ...`,
-  `cap verify ...`) and their outcome, or "Not run" with the reason.
-- **Notes:** Assumptions, follow-up work, or anything a reviewer should check.
 ```
 
 ## CAPTURE overview
